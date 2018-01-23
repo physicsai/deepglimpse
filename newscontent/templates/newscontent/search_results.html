@@ -1,0 +1,19 @@
+<html>     
+    <head>         
+    <title>Content Search</title>     
+    </head>     
+    <body>       
+        <p>You searched for: <strong>{{ query }}</strong></p>
+   
+        {% if content %}           
+            <p>Found {{ content|length }} content{{ content|pluralize }}.</p>
+            <ul>               
+                {% for item in content %}               
+                <li>{{ item.title }}</li>               
+                {% endfor %}           
+            </ul>       
+        {% else %}           
+            <p>No content matched your search criteria.</p>       
+        {% endif %}     
+    </body>
+</html>
