@@ -105,12 +105,13 @@ def register(request):
 					request.POST['username'],
 					request.POST['email'],
 					request.POST['password1'],
-					is_active = 0
+					is_active = 1
 			)
 
 			siteuser = SiteUser()
 			siteuser.zipper = request.POST['zipper']
 			siteuser.user = u
+			siteuser.email_validated = True
 			siteuser.save()
 
 			messages.success(request, 'Account created successfully')
@@ -234,10 +235,10 @@ def user_home(request):
 		my_city = "ZIP code lookup failed!"
 	
 	# print(dir(r))
-	print(r.user.is_active)
-	print(r.user_id)
-	print(r.activation_key)
-	print(r.email_validated)
+	# print(r.user.is_active)
+	# print(r.user_id)
+	# print(r.activation_key)
+	# print(r.email_validated)
 	# print(type(request.user))
 	# print(dir(request.user))
 	# print('\n')
