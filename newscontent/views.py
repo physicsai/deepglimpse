@@ -97,69 +97,80 @@ def display_meta(request):
 ########################################################
 ########################################################
 
-# def register(request):
-#     if request.method == 'POST':
-#         f = CustomUserCreationForm(request.POST)
-#         if f.is_valid():
-#             f.save()
-#             messages.success(request, 'Account created successfully')
-#             return redirect('register')
-
-#     else:
-#         f = CustomUserCreationForm()
-
-#     return render(request, 'newscontent/register.html', {'form': f})
-
 def register(request):
-	auth.logout(request)
 	if request.method == 'POST':
 		f = CustomUserCreationForm(request.POST)
 		if f.is_valid():
+			u = User.objects.create_user(
+					request.POST['username'],
+					request.POST['email'],
+					request.POST['password1'],
+					is_active = 0
+			)
 
-			# send email verification now
+			siteuser = SiteUser()
+			siteuser.zipper = request.POST['zipper']
+			siteuser.user = u
+			siteuser.save()
 
-			activation_key = generate_activation_key(username=request.POST['username'])
-
-			subject = "DeepGlimpse Account Verification"
-
-			message = '''\n
-Please visit the following link to verify your account \n\n{0}://{1}/activate/account/?key={2}
-						'''.format(request.scheme, request.get_host(), activation_key)            
-
-			error = False
-
-			try:
-				con = get_connection('django.core.mail.backends.console.EmailBackend')
-				send_mail(subject, message, 'noreply@example.com', [request.POST['email']],connection=con)
-				messages.add_message(request, messages.INFO, 'Account created! Click on the link sent to your email to activate the account')
-
-			except:
-			    error = True
-			    messages.add_message(request, messages.INFO, 'Unable to send email verification. Please try again')
-
-			if not error:
-				u = User.objects.create_user(
-						request.POST['username'],
-						request.POST['email'],
-						request.POST['password1'],
-						is_active = 0
-				)
-
-				siteuser = SiteUser()
-				siteuser.activation_key = activation_key
-				siteuser.activation_key2= activation_key
-				siteuser.zipper = request.POST['zipper']
-				# print(siteuser.zip_code)
-				# print(type(siteuser.zip_code))
-				siteuser.user = u
-				siteuser.save()
-
+			messages.success(request, 'Account created successfully')
 			return redirect('register')
 
 	else:
 		f = CustomUserCreationForm()
 
 	return render(request, 'newscontent/register.html', {'form': f})
+
+# def register(request):
+# 	auth.logout(request)
+# 	if request.method == 'POST':
+# 		f = CustomUserCreationForm(request.POST)
+# 		if f.is_valid():
+
+# 			# send email verification now
+
+# 			activation_key = generate_activation_key(username=request.POST['username'])
+
+# 			subject = "DeepGlimpse Account Verification"
+
+# 			message = '''\n
+# Please visit the following link to verify your account \n\n{0}://{1}/activate/account/?key={2}
+# 						'''.format(request.scheme, request.get_host(), activation_key)            
+
+# 			error = False
+
+# 			try:
+# 				con = get_connection('django.core.mail.backends.console.EmailBackend')
+# 				send_mail(subject, message, 'noreply@example.com', [request.POST['email']],connection=con)
+# 				messages.add_message(request, messages.INFO, 'Account created! Click on the link sent to your email to activate the account')
+
+# 			except:
+# 			    error = True
+# 			    messages.add_message(request, messages.INFO, 'Unable to send email verification. Please try again')
+
+# 			if not error:
+# 				u = User.objects.create_user(
+# 						request.POST['username'],
+# 						request.POST['email'],
+# 						request.POST['password1'],
+# 						is_active = 0
+# 				)
+
+# 				siteuser = SiteUser()
+# 				siteuser.activation_key = activation_key
+# 				siteuser.activation_key2= activation_key
+# 				siteuser.zipper = request.POST['zipper']
+# 				# print(siteuser.zip_code)
+# 				# print(type(siteuser.zip_code))
+# 				siteuser.user = u
+# 				siteuser.save()
+
+# 			return redirect('register')
+
+# 	else:
+# 		f = CustomUserCreationForm()
+
+# 	return render(request, 'newscontent/register.html', {'form': f})
 
 def activate_account(request):
 	key = request.GET['key']

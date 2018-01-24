@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^password-change/$',auth_views.password_change,{'template_name': 'password_change.html','post_change_redirect': 'password_change_done'},name='password_change'),
     url(r'^register/$', views.register, name='register'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^user_home/$', views.user_home, name='user_home'),
     url(r'^cookie/$', views.test_cookie, name='cookie'),

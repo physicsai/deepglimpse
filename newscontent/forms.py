@@ -45,7 +45,7 @@ class CustomUserCreationForm(forms.Form):
             self.cleaned_data['username'],
             self.cleaned_data['email'],
             self.cleaned_data['password1'],
-            self.cleaned_data['zipper']
+            # self.cleaned_data['zipper']
         )
         return user
 
