@@ -111,7 +111,7 @@ def register(request):
 			siteuser = SiteUser()
 			siteuser.zipper = request.POST['zipper']
 			siteuser.user = u
-			siteuser.email_validated = True
+			# siteuser.email_validated = True
 			siteuser.save()
 
 			messages.success(request, 'Account created successfully')
