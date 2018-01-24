@@ -20,6 +20,7 @@
             <li>Date Joined: {{ request.user.date_joined }}</li>
             <li>Last Login: {{ request.user.last_login }}</li>
             <li>ZIP code: {{ zip_code }}</li>
+            <li>Your city: {{ my_city }}</li>
         </ul>
 
         <p><a href="{% url 'logout' %}">Logout</a></p>

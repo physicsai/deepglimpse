@@ -51,3 +51,16 @@ class SiteUser(models.Model):
 
     def get_absolute_url(self):
         return reverse('post_by_author', args=[self.user.username])
+
+class ZipCodes(models.Model):
+    id = models.CharField(max_length=5, blank=True, null=False,primary_key=True,default='0')
+    zipcode = models.CharField(max_length=5, blank=True, null=True)
+    zip_class = models.CharField(max_length=20, blank=True, null=True)
+    city = models.CharField(max_length=30, blank=True, null=True)
+    state = models.CharField(max_length=2, blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'zip_codes'

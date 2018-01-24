@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.conf import settings
 from newscontent.helpers import generate_activation_key
-from newscontent.models import SiteUser
+from newscontent.models import SiteUser, ZipCodes
 
 def save_session_data(request):
 	# set new data
@@ -215,6 +215,13 @@ def user_home(request):
 
 
 	zip_code = r.zipper
+	#take first matching ZIP object:
+	try:
+		first_matching_zip = ZipCodes.objects.filter(zipcode=str(int(zip_code)))[0]
+		my_city = first_matching_zip.city
+	except:
+		my_city = "ZIP code lookup failed!"
+	
 	# print(dir(r))
 	print(r.user.is_active)
 	print(r.user_id)
@@ -224,7 +231,7 @@ def user_home(request):
 	# print(dir(request.user))
 	# print('\n')
 	# print(request.user.username)
-	return render(request, 'newscontent/user_home.html',{'zip_code':zip_code})
+	return render(request, 'newscontent/user_home.html',{'zip_code':zip_code,'my_city':my_city})
 
 def search(request):
 	error = False
