@@ -11,13 +11,15 @@
 
         <p>Welcome {{ request.user.username }} !</p>
 
+        <p><a href="{% url 'polls:detail' pk=1 %}">Answer today's polling question!</a></p>
+
         <p>User Details:</p>
 
         <ul>
-            <li>Email: {{ request.user.email|default:"NA" }}</li>
+<!--             <li>Email: {{ request.user.email|default:"NA" }}</li>
             <li>SuperUser: {{ request.user.is_superuser }}</li>
             <li>Staff: {{ request.user.is_staff }}</li>
-            <li>Date Joined: {{ request.user.date_joined }}</li>
+            <li>Date Joined: {{ request.user.date_joined }}</li> -->
             <li>Last Login: {{ request.user.last_login }}</li>
             <li>ZIP code: {{ zip_code }}</li>
             <li>Your city: {{ my_city }}</li>

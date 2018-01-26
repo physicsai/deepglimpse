@@ -21,7 +21,7 @@ from deepglimpse.views import hello, current_datetime, hours_ahead, contact, tha
 
 
 urlpatterns = [
-    url(r'^polls/', include('polls.urls')),
+    url(r'^polls/', include('polls.urls', namespace='polls')),
     url(r'^admin/', admin.site.urls),
     url(r'^hello/$', hello),
     # url(r'^register/$', register, name='register'),
