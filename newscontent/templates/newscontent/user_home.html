@@ -11,7 +11,7 @@
 
         <p>Welcome {{ request.user.username }} !</p>
 
-        <p><a href="{% url 'polls:detail' pk=1 %}">Answer today's polling question!</a></p>
+        <p><a href="{% url 'polls:index' %}">Answer today's polling question!</a></p>
 
         <p>User Details:</p>
 
@@ -25,7 +25,7 @@
             <li>Your city: {{ my_city }}</li>
         </ul>
 
-        <p><a href="{% url 'logout' %}">Logout</a></p>
+        <p><a href="{% url 'newscontent:logout' %}">Logout</a></p>
 
         </div>
     </div>

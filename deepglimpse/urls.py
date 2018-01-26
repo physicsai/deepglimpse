@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
     url(r'^contact/$', contact),
     url(r'^contact/thanks/$', thanks),
-    url(r'^', include('newscontent.urls')),
+    url(r'^', include('newscontent.urls', namespace='newscontent')),
 
 ]
