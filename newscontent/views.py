@@ -14,8 +14,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from newscontent.helpers import generate_activation_key
 from newscontent.models import SiteUser, ZipCodes
+# from django.contrib.auth.decorators import login_required
 
-@login_required
 def save_session_data(request):
 	# set new data
 	request.session['id'] = 1
@@ -23,7 +23,6 @@ def save_session_data(request):
 	request.session['password'] = 'rootpass'
 	return HttpResponse("Session Data Saved")
 
-@login_required
 def access_session_data(request):
 	response = ""
 	if request.session.get('id'):
@@ -38,7 +37,6 @@ def access_session_data(request):
 	else:
 		return HttpResponse(response)
 
-@login_required
 def delete_session_data(request):
 	try:
 		del request.session['id']
@@ -49,12 +47,10 @@ def delete_session_data(request):
 
 	return HttpResponse("Session Data cleared")
 
-@login_required
 def test_session(request):
 	request.session.set_test_cookie()
 	return HttpResponse("Testing session cookie")
 
-@login_required
 def test_delete(request):
 	if request.session.test_cookie_worked():
 		request.session.delete_test_cookie()
@@ -63,7 +59,6 @@ def test_delete(request):
 		response = HttpResponse("Cookie test failed")
 	return response
 
-@login_required
 def stop_tracking(request):
 	if request.COOKIES.get('visits'):
 	   response = HttpResponse("Cookies Cleared")
@@ -72,7 +67,6 @@ def stop_tracking(request):
 		response = HttpResponse("We are not tracking you.")
 	return response
 
-@login_required
 def track_user(request):
 	response = render(request, 'newscontent/track_user.html') # store the response in response variable
 	if not request.COOKIES.get('visits'):        
@@ -82,7 +76,6 @@ def track_user(request):
 		response.set_cookie('visits', str(visits),  3600 * 24 * 365 * 2)
 	return response
 
-@login_required
 def test_cookie(request):   
 	if not request.COOKIES.get('color'):
 		response = HttpResponse("Cookie Set")
@@ -91,7 +84,6 @@ def test_cookie(request):
 	else:
 		return HttpResponse("Your favorite color is {0}".format(request.COOKIES['color']))
 
-@login_required
 def display_meta(request):
 	values = request.META   
 	html = []
@@ -222,7 +214,6 @@ def logout(request):
 	return render(request,'newscontent/logout.html')
 
 
-@login_required
 def user_home(request):
 	if not request.user.is_authenticated():
 		return redirect('/login/')
@@ -252,7 +243,7 @@ def user_home(request):
 	# print(request.user.username)
 	return render(request, 'newscontent/user_home.html',{'zip_code':zip_code,'my_city':my_city})
 
-@login_required
+
 def search(request):
 	error = False
 	if 'q' in request.GET:
