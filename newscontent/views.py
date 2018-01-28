@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from newscontent.helpers import generate_activation_key
 from newscontent.models import SiteUser, ZipCodes
+from django.contrib.auth import authenticate,logout,login
+
 # from django.contrib.auth.decorators import login_required
 
 def save_session_data(request):
@@ -187,7 +189,7 @@ def activate_account(request):
 
 
 
-def login(request):
+def login_standard(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/user_home/')
 	# else:
@@ -208,6 +210,54 @@ def login(request):
 
 	return render(request, 'newscontent/login.html')
 
+def login_register(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/user_home/')
+
+	if request.method == 'POST':
+		if request.POST.get('submit') == 'Login':
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+			user = auth.authenticate(username=username, password=password)
+
+			if user is not None:
+				# correct username and password login the user
+				auth.login(request, user)
+				return HttpResponseRedirect('/user_home/')
+
+			else:
+				messages.error(request, 'Error wrong username/password')
+
+
+		if request.POST.get('submit') == 'Register':
+			f = CustomUserCreationForm(request.POST)
+			if f.is_valid():
+				u = User.objects.create_user(
+						request.POST['username'],
+						request.POST['email'],
+						request.POST['password1'],
+						is_active = 1
+				)
+
+				siteuser = SiteUser()
+				siteuser.zipper = request.POST['zipper']
+				siteuser.user = u
+				# siteuser.email_validated = True
+				siteuser.save()
+
+				messages.success(request, 'Account created successfully')
+
+				user = auth.authenticate(username=f.cleaned_data['username'], password=f.cleaned_data['password1'])
+				if user is not None:
+					auth.login(request, user)
+				return redirect('/user_home/')
+
+	else:
+		f = CustomUserCreationForm()
+
+	return render(request, 'newscontent/login_register.html', {'form': f})
+
+
 
 def logout(request):
 	auth.logout(request)
@@ -215,13 +265,13 @@ def logout(request):
 
 
 def user_home(request):
-	if not request.user.is_authenticated():
-		return redirect('/login/')
+	# if not request.user.is_authenticated():
+	# 	return redirect('/login/')
 	# print(request.user)
 	try:
 		r = get_object_or_404(SiteUser,user=request.user)
 	except:
-		return HttpResponseRedirect('/register/')
+		return HttpResponseRedirect('/login/')
 
 
 	zip_code = r.zipper

@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}</title>
+    {% block styling_block %}{% endblock %}
 </head>
 <body>
-    <h1>DeepGlimpse</h1>
+    <!-- <h1>DeepGlimpse</h1> -->
     {% block content %}{% endblock %}
 
     {% block footer %}
     <hr>
-    <p>Thanks for visiting www.deepglimpse.com!</p>
+    <p>DeepGlimpse &copy; 2018</p>
     {% endblock %}
 </body>
 </html>
