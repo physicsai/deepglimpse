@@ -4,7 +4,7 @@
 
 
 {% block title %}
-    Login - {{ block.super }}
+    Login  {{ block.super }}
 {% endblock %}
 
 {% block styling_block %}
@@ -12,14 +12,12 @@
 {% endblock %}
 
 {% block content %}
+<div class="logo">
+				<img src="{% static 'newscontent/images/LOGO_3.png' %}" alt="Logo" width="40%" height="40%">
+</div>
+    <div class="content" >
+    	<div class="forms">
 
-<img src="{% static 'newscontent/images/LOGO_3.png' %}" alt="Logo" style="width: 40%; height: 40%>
-
-
-
-    <div class="content">
-        <div class="section-inner clearfix">
-    	<hr>
 
         <h3>Login</h3>
 
@@ -49,11 +47,11 @@
             </table>
         </form>
 
-        </div>
-    </div>
 
 
-         <div class="login">
+
+
+         <!-- <div class="login" style="background-color:blue;"> -->
 
          {% if messages %}
             <ul>
@@ -75,6 +73,7 @@
                 </tr>
              </table>
          </form>
+     </div>
      </div>
 
 {% endblock %}
