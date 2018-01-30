@@ -8,8 +8,18 @@ body {
 
 .questions {
 font-size: 45px;
+/*background-color: coral;*/
 /*text-color: #0074D9;*/
 /*text-align: center;*/
 text-indent: 50px;
 
+}
+
+#rcorners1 {
+    border-radius: 25px;
+    background: #73AD21;
+    /*font-color: #0074D9;*/
+    padding: 20px; 
+    width: 80%;
+    height: 250px;    
 }
