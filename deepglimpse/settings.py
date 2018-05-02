@@ -145,6 +145,10 @@ LOGIN_URL = '/login/'
 
 SESSION_SAVE_EVERY_REQUEST = True
 
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Configure Django App for Heroku.
 import django_heroku
 django_heroku.settings(locals())
