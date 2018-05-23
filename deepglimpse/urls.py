@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^contact/$', contact),
     url(r'^contact/thanks/$', thanks),
     url(r'^', include('newscontent.urls', namespace='newscontent')),
+    url(r'^chat/', include('chat.urls')),
 
 ]
